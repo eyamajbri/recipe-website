@@ -38,7 +38,7 @@ function Pagination(props){
             }}
             if(value === props.page){
                 
-               return(<div key={value} className="PageItem" onClick={()=>props.onPageChange(value)} style={{background:"green"}} >{value}</div>);}
+               return(<div key={value} className="PageItem" onClick={()=>props.onPageChange(value)}  >{value}</div>);}
             else {
                 
                 return(<Link to={`/recipe/page${pt}`} key={value} className="PageItem" onClick={()=>props.onPageChange(value)}>{value}</Link>);

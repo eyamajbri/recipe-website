@@ -10,6 +10,7 @@ function Item() {
   
   return <div>Item
     <div>{props.e[0]}</div>
+    <img src={props.e[1]} className="photo"/>
   </div>;
 }
 

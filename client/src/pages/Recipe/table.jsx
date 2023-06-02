@@ -7,7 +7,7 @@ function Table (props){
     return(<div className="containerrr" > 
              {recipes.map(recipe=>(
                     <div key={recipe.id}>
-                        <Element e={[recipe.title,recipe.chef,recipe.date,recipe.images,recipe.likes]}></Element>   
+                        <Element e={[recipe.title,recipe.image,recipe.date,recipe.images,recipe.likes]}></Element>   
                     </div>))} 
                    
     </div>);
