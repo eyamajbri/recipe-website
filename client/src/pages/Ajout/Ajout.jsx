@@ -1,8 +1,11 @@
-import React from "react";
-import "./Ajout.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import RecipeForm from './RecipeForm';
 
-function Ajout() {
-  return <div>Ajout</div>;
-}
+// Inside './pages/Ajout/Ajout.jsx'
+const Ajout = () => {
+  ReactDOM.render(<RecipeForm />, document.getElementById('root'));
+};
 
 export default Ajout;
+

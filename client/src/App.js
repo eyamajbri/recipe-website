@@ -1,5 +1,6 @@
 import Home from "./pages/Home/Home";
-import Ajout from "./pages/Ajout/Ajout";
+import Ajout from "./pages/Ajout/Ajout.jsx";
+import RecipeForm from "./pages/Ajout/RecipeForm";
 import Item from "./pages/Item/Item";
 import Login from "./pages/Login/Login";
 import Edit from "./pages/Edit/Edit";
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Ajout" element={<Ajout />} />
+          <Route path="/RecipeForm" element={<RecipeForm />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/item" element={<Item/>} />
           <Route path="/Edit" element={<Edit/>} />
