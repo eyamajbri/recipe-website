@@ -24,7 +24,7 @@ const SignUp = () => {
       photo,
     };
     try {
-      const response = await axios.post('/api/users', formData);
+      const response = await axios.post("http://localhost:8000", formData);
       console.log(response.data); // Handle the response data
     } catch (error) {
       console.error(error); // Handle any errors
@@ -60,7 +60,7 @@ const SignUp = () => {
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
       <label>Photo:</label>
-      <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} />
+      <input type="file" value={photo} onChange={(e) => setPhoto(e.target.value)} />
 
       <button type="submit">Submit</button>
     </form>

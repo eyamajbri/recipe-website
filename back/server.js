@@ -123,7 +123,6 @@ app.post('/users', async (req, res) => {
       firstName,
       lastName,
       nationality,
-      favorites,
       photo,
     } = validation.value;
 
@@ -141,7 +140,7 @@ app.post('/users', async (req, res) => {
       lastName,
       nationality,
       password: hashedPassword,
-      favorites,
+      favorites: '',
       photo,
     });
     await user.save();
@@ -177,7 +176,7 @@ app.post('/login', async (req, res) => {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
   
-      // Compare the provided password with the hashed password
+      // Check if the password is valid
       const isPasswordValid = await bcryptjs.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid credentials' });

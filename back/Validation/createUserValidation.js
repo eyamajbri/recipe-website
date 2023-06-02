@@ -13,7 +13,7 @@ const createUserValidation = Joi.object({
   nationality: Joi.string().valid(...countries).required(),
   password: Joi.string()
   .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-favorites: Joi.array().items(Joi.string()),
+  favorites: Joi.array().items(Joi.string()),
   photo: Joi.string().default('icon'),
 });
 
