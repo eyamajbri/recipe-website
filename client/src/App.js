@@ -18,12 +18,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Ajout" element={<Ajout />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/item" element={<Item/>} />
+          <Route path="/Item" element={<Item/>} />
           <Route path="/Edit" element={<Edit/>} />
           <Route path="/Profil" element={<Profil/>} />
-          <Route path="/home" element={<Home/>} />
+          <Route path="/Home" element={<Home/>} />
           <Route path="/SignUP" element={<SignUp/>} />
-          <Route path="/Recipe" element={<Recipe/>} />
+          <Route path="/Recipe/*" Component={Recipe} />
           <Route path="*" element={<div>404 not found</div>} />
         </Routes>
       </BrowserRouter>
@@ -31,6 +31,8 @@ function App() {
     </>
   );
 }
+
+
 
 
 

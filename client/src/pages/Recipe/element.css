@@ -1,0 +1,19 @@
+.element {
+    font-size: larger;
+    height: 70vh;
+    /* border-radius: 3%; */
+    cursor: pointer;
+    border: solid;
+    background-color: #ffd6bd;
+}
+
+.photoo{
+    width:100%;
+    height:45vh;
+    /* border-top-left-radius: 3%; */
+    /* border-top-right-radius: 3%; */
+    object-fit: cover; 
+
+
+}
+

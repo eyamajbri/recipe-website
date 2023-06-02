@@ -1,0 +1,10 @@
+.containerrr{ 
+    width: 99%;
+    display:grid;
+    grid-template-columns: 345px 345px 345px;
+    column-gap: 5%;
+    row-gap: 100px;
+    justify-content: center;
+    align-items: center;
+    
+}

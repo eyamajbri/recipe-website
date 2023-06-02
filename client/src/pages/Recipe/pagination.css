@@ -1,0 +1,24 @@
+.nav {
+    font-size: larger;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    align-items:center;
+    cursor: pointer;
+    
+}
+        
+.PageItem{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right:15px;
+    border: none;
+    border-radius: 60px;
+    text-align: start;
+    text-decoration: none;
+
+    
+}
+
+
