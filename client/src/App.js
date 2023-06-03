@@ -13,6 +13,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <SignUp />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
