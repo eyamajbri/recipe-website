@@ -14,7 +14,6 @@ const Login = () => {
     };
     try {
       const response = await axios.post('http://localhost:8000/login', formData);
-      console.log(response.data);
       if (response.status === 200) {
         // Successful login
         alert('Login successful');
@@ -22,6 +21,7 @@ const Login = () => {
         localStorage.setItem('token', token);
         setUserData(userData);
         console.log(userData);
+        console.log(userData.photo)
         // Reset form fields
         setEmail('');
         setPassword('');
@@ -64,8 +64,7 @@ const Login = () => {
           <p>firstame: {userData.firstName}</p>
           <p> lastname:{userData.lastName} </p>
           <p> email: {userData.email} </p>
-          <p>favourites:{userData.favorites}</p>
-          <img src={userData.photo}></img>
+          <img src={`http://localhost:8000/uploads/${userData.photo}`} alt="Profile Photo" />
         </div>
       )}
     </div>

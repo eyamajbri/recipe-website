@@ -7,10 +7,49 @@ const morgan = require('morgan');
 const bcryptjs = require('bcryptjs');
 const createUserValidation = require('./Validation/createUserValidation');
 const jwt = require('jsonwebtoken'); 
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const filename = `${uniqueSuffix}${path.extname(file.originalname)}`;
+    cb(null, filename);
+  }
+});
+
+
+
+const upload = multer({ storage });
+
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors())
+
+app.post("/upload", upload.single('profile'),(req,res)=>{
+  console.log(req)
+})
+
+
+
+
+
+
+
+
+
+app.use('/uploads', express.static('uploads'));
+
+app.post('/images', upload.single('profile'), (req, res) => {
+  console.log(req.file);
+  res.json({
+    success: 1,
+    profile_url: `http://localhost:8000/profile/${req.file.filename}`
+  });
+});
 
 // Middleware to log requests
 app.use(morgan('dev'));
@@ -110,7 +149,7 @@ app.post('/recipes', requireAuth, async (req, res) => {
 });
 
 // Create a new user
-app.post('/users', async (req, res) => {
+app.post('/users',upload.single('profile'), async (req, res) => {
   try {
     console.log(req.body);
     const validation = createUserValidation.validate(req.body);
@@ -124,8 +163,7 @@ app.post('/users', async (req, res) => {
       firstName,
       lastName,
       nationality,
-      favorites,
-      photo
+      photo 
     } = validation.value;
 
     let userAlreadyExist = await User.findOne({ email });
@@ -142,8 +180,8 @@ app.post('/users', async (req, res) => {
       lastName,
       nationality,
       password: hashedPassword,
-      favorites,
-      photo,
+      favorites:"",
+      photo: req.file.filename,
     });
     await user.save();
 
