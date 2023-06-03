@@ -1,19 +1,27 @@
-import React from "react"
-import Element from "./element";
-import './table.css'
+import React from "react";
+import './table.css';
+import Blanc from './bidha';
+import Taswira from './taswira';
+import './home.css';
 
-function Table (props){
-    let recipes=props.recipe;
-    return(<div className="containerrr" > 
-             {recipes.map(recipe=>(
-                    <div key={recipe.id}>
-                        <Element e={[recipe.title,recipe.image,recipe.date,recipe.images,recipe.likes]}></Element>   
-                    </div>))} 
-                   
-    </div>);
+function Table(props) {
+  let recipes = props.recipe;
+  
+  return (
+    <div className="h-recipes">
+      {recipes.map(recipe => (
+          
+            <Blanc key={recipe.id} e={[recipe.title, recipe.nb_likes]}></Blanc>
+          
+          
+        
+      ))}
+    </div>
+  );
 }
 
 export default Table;
+
 
 
 /*function Table (props){

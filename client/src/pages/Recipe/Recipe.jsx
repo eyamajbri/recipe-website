@@ -1,16 +1,18 @@
 import React from "react";
-import "./Recipe.css";
 import {useState} from 'react'
 import { useEffect } from 'react';
 import { Route,Routes,useLocation} from 'react-router-dom';
 import Pagination from './pagination';
 import Table from './table';
+import Tablee from './tablee';
+import './home.css'
+import './Recipe.css'
 
 
 function Recipe() {
   const [recipes, setRecipes] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(9);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -101,9 +103,13 @@ window.scrollTo({
 function MyComponent(){
   return(
   <div id={localStorage.getItem('currentPage')} className="parent" >
+     <div className="box-22">
+        <div className="h-recipes-container">
+          <div  className="categories" ></div>
     <Table recipe={getRecipes(page,limit)}  />
+    <Tablee recipe={getRecipes(page,limit)} />
     <Pagination totalPage={totalPages} page={page} limit={limit} siblings={1} onPageChange={handlePageChange} ></Pagination>   
-  </div>)
+  </div></div></div>)
 }
 
 
