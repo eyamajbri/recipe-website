@@ -124,6 +124,8 @@ app.post('/users', async (req, res) => {
       firstName,
       lastName,
       nationality,
+      favorites,
+      photo
     } = validation.value;
 
     let userAlreadyExist = await User.findOne({ email });
@@ -140,8 +142,8 @@ app.post('/users', async (req, res) => {
       lastName,
       nationality,
       password: hashedPassword,
-      favorites: '',
-      photo:'',
+      favorites,
+      photo,
     });
     await user.save();
 

@@ -19,6 +19,7 @@ const SignUp = () => {
       lastName,
       nationality,
       password,
+      photo,
     };
     try {
       const response = await axios.post('http://localhost:8000/users', formData);

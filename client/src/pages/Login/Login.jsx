@@ -64,6 +64,8 @@ const Login = () => {
           <p>firstame: {userData.firstName}</p>
           <p> lastname:{userData.lastName} </p>
           <p> email: {userData.email} </p>
+          <p>favourites:{userData.favorites}</p>
+          <img src={userData.photo}></img>
         </div>
       )}
     </div>
