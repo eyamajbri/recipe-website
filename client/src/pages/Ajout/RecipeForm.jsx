@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import './Ajout.css';
 
-function RecipeForm ({ infoSubmitObj, infoErrorsObj }) {
+function RecipeForm() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState([]);
   const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
- 
   const apiUrl = 'http://localhost:8100';
 
-
   const handleSubmit = async (event) => {
-    
     event.preventDefault();
 
-    
     // Create a FormData object to send the form data
     const formData = new FormData();
     formData.append('email', email);
@@ -29,12 +28,9 @@ function RecipeForm ({ infoSubmitObj, infoErrorsObj }) {
 
     // Send the recipe data to the server
     try {
-      const response = await fetch(`${apiUrl}/recipes`, {
-        method: 'POST',
-        body: formData,
-      });      
+      const response = await axios.post(`${apiUrl}/recipes`, formData);
 
-      if (response.ok) {
+      if (response.status === 200) {
         // Recipe was successfully saved
         // Reset form fields
         setEmail('');
@@ -43,17 +39,21 @@ function RecipeForm ({ infoSubmitObj, infoErrorsObj }) {
         setIngredients([]);
         setCategory('');
         setImage(null);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setSubmitStatus({ message: 'Recipe saved successfully', type: 'success' });
       } else {
-        // Handle error response
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
       }
     } catch (error) {
-      // Handle fetch or server connection error
+      console.error('Error saving recipe:', error);
+      setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
     }
   };
 
   const handleAddIngredient = () => {
     setIngredients([...ingredients, '']);
-    
+
     // Scroll to the newly added ingredient
     setTimeout(() => {
       const ingredientDivs = document.getElementsByClassName('ingredientDiv');
@@ -69,121 +69,102 @@ function RecipeForm ({ infoSubmitObj, infoErrorsObj }) {
   };
 
   return (
-    <div className='box' style={{backgroundImage: `url(${require('./img/img3.jpg')}` }}>
-     
+    <div className='box' style={{ backgroundImage: `url(${require('./img/img3.jpg')}` }}>
+      <div className='form-container'>
+        <form encType='multipart/form-data' id='form'>
+          <div className='box-outer'>
+            <h1>Submit Your Recipe</h1>
+            <div>
+              <p>Share your amazing recipes with thousands of web developers across the world. Fill our form to get started.</p>
+            </div>
+          </div>
 
-    <div className="form-container" >
+          {submitStatus && <div className={`alert ${submitStatus.type}`}>{submitStatus.message}</div>}
 
-    <form encType="multipart/form-data" id='form' >
-    <div className="box-outer">
-      <h1 >Submit Your Recipe</h1>
-      <div >
-        <p >Share your amazing recipies with thousands of web developers accross the world. Fill our form to get started.</p>
+          <div>
+            <div className='form-control'>
+              <label>Recipe Name</label>
+              <input
+                type='text'
+                name='name'
+                id='name'
+                className='form-control'
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            <div className='form-control'>
+              <label>Description</label>
+              <textarea
+                name='description'
+                id='description'
+                className='form-control'
+                cols='30'
+                rows='4'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+            </div>
+
+            <div className='form-control'>
+              <label>Ingredients</label>
+              <div className='ingredientList'>
+                {ingredients.map((ingredient, index) => (
+                  <div className='ingredientDiv mb-1' key={index}>
+                    <input
+                      type='text'
+                      name='ingredients'
+                      className='form-control'
+                      value={ingredient}
+                      onChange={(e) => handleIngredientChange(e, index)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <button type='button' className='btn' onClick={handleAddIngredient}>
+                + Ingredient
+              </button>
+            </div>
+
+            <div className='form-control'>
+              <label>Select Category</label>
+              <select
+                className='form-select form-control'
+                name='category'
+                aria-label='Category'
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option>Select Category</option>
+                <option value='Dessert'>Dessert</option>
+                <option value='Lunch'>Lunch</option>
+                <option value='Dinner'>Dinner</option>
+              </select>
+            </div>
+
+            <div className='form-control'>
+              <label>Product Image</label>
+              <input
+                type='file'
+                className='form-control'
+                name='image'
+                accept='image/*'
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+            </div>
+
+            <div className='form-control'>
+              <button type='submit' id='submit' onClick={handleSubmit}>
+                Submit Recipe
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-
-    {infoSubmitObj && (
-        <div className="col-8 alert alert-success" role="alert">
-          {infoSubmitObj}
-        </div>
-      )}
-
-      {infoErrorsObj && (
-        <div className="col-8 alert alert-danger" role="alert">
-          {infoErrorsObj[0].message}
-        </div>
-      )}
-    
-      <div>
-        <div className="form-control">
-          <label >
-            Recipe Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className="form-control"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-
-        <div className="form-control">
-          <label >
-            Description
-          </label>
-          <textarea
-            name="description"
-            id="description"
-            className="form-control"
-            cols="30"
-            rows="4"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-        </div>
-
-        <div className="form-control">
-          <label>
-            Ingredients
-          </label>
-          <div className="ingredientList">
-            {ingredients.map((ingredient, index) => (
-              <div className="ingredientDiv mb-1" key={index}>
-                <input
-                  type="text"
-                  name="ingredients"
-                  className="form-control"
-                  value={ingredient}
-                  onChange={(e) => handleIngredientChange(e, index)}
-                />
-              </div>
-            ))}
-          </div>
-          <button type="button" className="btn" onClick={handleAddIngredient}>
-            + Ingredient
-          </button>
-        </div>
-
-        <div className="form-control">
-          <label>Select Category</label>
-          <select
-            className="form-select form-control"
-            name="category"
-            aria-label="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option>Select Category</option>
-            <option value="Dessert">Dessert</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Dinner">Dinner</option>
-          </select>
-        </div>
-
-        <div className="form-control">
-          <label>Product Image</label>
-          <input
-            type="file"
-            className="form-control"
-            name="image"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-        </div>
-
-        <div className="form-control">
-          <button type="submit" id='submit' onClick={handleSubmit}>
-            Submit Recipe
-          </button>
-        </div>
-      </div>
-    </form>
-   </div>
-   </div>
   );
-};
+}
 
 export default RecipeForm;

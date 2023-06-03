@@ -111,3 +111,32 @@ select, textarea */
     box-shadow: 0px 0px 12px rgba(94, 148, 67, 0.89);
     transition-duration: 0.6s;
 }
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+    width: 86%;
+    margin-left: 25px;
+}
+
+.error {
+    background-color: #f2dede;
+    color: #a94442;
+    border: 1px solid #ebccd1;
+    width: 86%;
+    margin-left: 25px;
+    
+}
+  
+  
+  
+  
+  
+  
+  
