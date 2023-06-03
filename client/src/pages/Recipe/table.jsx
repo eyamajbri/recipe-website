@@ -11,7 +11,7 @@ function Table(props) {
     <div className="h-recipes">
       {recipes.map(recipe => (
           
-            <Blanc key={recipe.id} e={[recipe.title, recipe.nb_likes]}></Blanc>
+            <Blanc key={recipe.id} e={[recipe.name, recipe.nb_likes]}></Blanc>
           
           
         

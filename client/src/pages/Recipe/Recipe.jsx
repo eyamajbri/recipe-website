@@ -101,15 +101,36 @@ window.scrollTo({
 
 /// My component 
 function MyComponent(){
-  return(
-  <div id={localStorage.getItem('currentPage')} className="parent" >
-     <div className="box-22">
-        <div className="h-recipes-container">
-          <div  className="categories" ></div>
-    <Table recipe={getRecipes(page,limit)}  />
-    <Tablee recipe={getRecipes(page,limit)} />
-    <Pagination totalPage={totalPages} page={page} limit={limit} siblings={1} onPageChange={handlePageChange} ></Pagination>   
-  </div></div></div>)
+  return( 
+    <div>
+      <div className="container-h-recipe">
+        <div className="box-12">
+          <img src={require('./img/home12.jpg')}  />
+            <div className="text-container">
+                <h1>EXPLORE RECIPES</h1>
+            </div>
+        </div>
+        <div className="box-22">
+          <div className="h-recipes-container">
+            <div  className="categories" >
+            <ul>
+                  <li><a className="categorie" > ALL </a></li>
+                  <li><a className="categorie" > STARTERS </a></li>
+                  <li><a className="categorie" > MAIN COURSES </a></li>
+                  <li><a className="categorie" > SIDE DISHES </a></li>
+                  <li><a className="categorie" > DESSERTS </a></li>
+              </ul>
+            </div>
+            
+            <Table recipe={getRecipes(page,limit)}  />
+      <Tablee recipe={getRecipes(page,limit)} />
+      <Pagination totalPage={totalPages} page={page} limit={limit} siblings={1} onPageChange={handlePageChange} ></Pagination> 
+          </div>
+          <div className=""></div>
+      </div>
+    </div>
+    </div>
+    )
 }
 
 
@@ -143,6 +164,7 @@ if (path1==='/recipe'){
 return (
   <div className="parent">
     {isLoading ? (
+
       <p>Loading...</p>
     ) : (
       <Routes>

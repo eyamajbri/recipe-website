@@ -78,6 +78,7 @@ app.get('/users', async (req, res) => {
 app.post('/recipes', requireAuth, async (req, res) => {
   try {
     const {
+      
       title,
       description,
       ingredients,
@@ -90,7 +91,7 @@ app.post('/recipes', requireAuth, async (req, res) => {
     // const user = req.userId;
 
     const newRecipe = new Recipe({
-      
+      user:"",
       title,
       description,
       ingredients,
