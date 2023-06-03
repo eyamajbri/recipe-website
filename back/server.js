@@ -60,7 +60,7 @@ app.listen(port, () => {
 // Connect to MongoDB
 
   function connectDB(){
-    mongoose.connect('mongodb+srv://recipes:abcd1234@cluster0.7yzcvnm.mongodb.net/RECIPES_DB?retryWrites=true&w=majority')
+    mongoose.connect('mongodb+srv://eyamajbri:eyam@cluster.lyjhbei.mongodb.net/')
     .then(()=>{
         console.log("connected to db")
     })
