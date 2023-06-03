@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { getNames } from 'country-list';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const countries = getNames();
 
@@ -11,6 +13,7 @@ const SignUp = () => {
   const [nationality, setNationality] = useState('');
   const [password, setPassword] = useState('');
   const [photo, setPhoto] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +37,7 @@ const SignUp = () => {
         setNationality('');
         setPassword('');
         setPhoto(null);
+        navigate('/login')
       } else {
         // Handle error response
       }
@@ -53,6 +57,7 @@ const SignUp = () => {
     setPhoto(file);
   };
   return (
+    <div>
     <form onSubmit={handleSubmit} encType="multipart/form-data" >
       <label>Email:</label>
       <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -89,6 +94,7 @@ const SignUp = () => {
 
       <button type="submit">Submit</button>
     </form>
+    </div>
   );
 };
 

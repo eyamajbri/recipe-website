@@ -1,8 +1,10 @@
-import React from "react";
-import "./Profil.css";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
-function Profil() {
-  return <div>Profil</div>;
-}
+const Profil = () => {
+ 
+
+  return <div>Profil Page</div>;
+};
 
 export default Profil;

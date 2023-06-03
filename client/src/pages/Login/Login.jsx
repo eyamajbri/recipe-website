@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/Profil');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,10 +29,19 @@ const Login = () => {
         localStorage.setItem('token', token);
         setUserData(userData);
         console.log(userData);
-        console.log(userData.photo)
+        console.log(userData.photo);
         // Reset form fields
         setEmail('');
         setPassword('');
+  
+        // Store the name in localStorage
+        localStorage.setItem('name', userData.firstName);
+        localStorage.setItem('last', userData.lastName);
+        localStorage.setItem('email', userData.email);
+        localStorage.setItem('photo', userData.photo);
+
+  
+        navigate('/Profil', { state: { userData } });
       } else {
         // Handle error response
         alert('Login failed');
@@ -34,6 +51,9 @@ const Login = () => {
       alert('An error occurred: ' + error.message);
     }
   };
+  
+  
+
 
   return (
     <div>
@@ -58,15 +78,6 @@ const Login = () => {
 
         <button type="submit">Submit</button>
       </form>
-      {userData && (
-        <div>
-          <h2>User Data:</h2>
-          <p>firstame: {userData.firstName}</p>
-          <p> lastname:{userData.lastName} </p>
-          <p> email: {userData.email} </p>
-          <img src={`http://localhost:8000/uploads/${userData.photo}`} alt="Profile Photo" />
-        </div>
-      )}
     </div>
   );
 };
