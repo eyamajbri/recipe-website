@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './style.css';
+import './Ajout.css';
 
-const RecipeForm = () => {
+function RecipeForm ({ infoSubmitObj, infoErrorsObj }) {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -10,7 +10,7 @@ const RecipeForm = () => {
   const [image, setImage] = useState(null);
 
  
-  const apiUrl = 'http://localhost:8080';
+  const apiUrl = 'http://localhost:8100';
 
 
   const handleSubmit = async (event) => {
@@ -69,33 +69,32 @@ const RecipeForm = () => {
   };
 
   return (
-    <div>
+    <div className='box' style={{backgroundImage: `url(${require('./img/img3.jpg')}` }}>
      
 
-    <div class="row justify-content-center">
+    <div className="form-container" >
 
     <form encType="multipart/form-data" id='form' >
-    <div class="box-outer">
-      <h1 class="display-5 fw-bold">Submit Your Recipe</h1>
-      <div class="col-lg-6 mx-auto">
-        <p class="lead">Share your amazing recipies with thousands of web developers accross the world. Fill our form to get started.</p>
+    <div className="box-outer">
+      <h1 >Submit Your Recipe</h1>
+      <div >
+        <p >Share your amazing recipies with thousands of web developers accross the world. Fill our form to get started.</p>
       </div>
     </div>
-      <div className="row g-3">
-        <div className="form-control">
-          <label>
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          required/>
-        </div>
 
+    {infoSubmitObj && (
+        <div className="col-8 alert alert-success" role="alert">
+          {infoSubmitObj}
+        </div>
+      )}
+
+      {infoErrorsObj && (
+        <div className="col-8 alert alert-danger" role="alert">
+          {infoErrorsObj[0].message}
+        </div>
+      )}
+    
+      <div>
         <div className="form-control">
           <label >
             Recipe Name
@@ -158,11 +157,9 @@ const RecipeForm = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option>Select Category</option>
-            <option value="Thai">Thai</option>
-            <option value="American">American</option>
-            <option value="Chinese">Chinese</option>
-            <option value="Mexican">Mexican</option>
-            <option value="Indian">Indian</option>
+            <option value="Dessert">Dessert</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
           </select>
         </div>
 

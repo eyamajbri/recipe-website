@@ -11,13 +11,13 @@ app.use(express.json())
 app.use(morgan("dev"))
 
 
-const port = 8080;
+const port = 8100;
 const upload = multer({ dest: 'uploads/' });
 
   
 app.get('/recipes', (req, res) => {
     axios
-        .get("http://localhost:8080/recipes")
+        .get("http://localhost:8100/recipes")
         .then(function (response) {
           res.header("Access-Control-Allow-Origin", "http://localhost:3000");
           res.send(response.data);
@@ -30,12 +30,11 @@ app.get('/recipes', (req, res) => {
 
 // Handle POST request to '/recipes' to save a new recipe
 app.post('/recipes', upload.single('image'), async (req, res) => {
-    const { email, name, description, ingredients, category } = req.body;
+    const { name, description, ingredients, category } = req.body;
   
 // Save the submitted recipe to the database
     try {
       const recipe = new Recipe({
-        email,
         name,
         description,
         ingredients,
