@@ -39,27 +39,28 @@ function connectDB() {
 
 // Middleware for authentication
 const requireAuth = (req, res, next) => {
-  const token = req.header('Authorization');
+    const token = req.header('Authorization');
+  
+    // Check if the token exists
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  
+    try {
+      // Verify the token
+      const decoded = jwt.verify(token, 'your-secret-key');
+  
+      // Attach the user ID to the request object
+      req.userId = decoded.userId;
+  
+      // Proceed to the next middleware
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ error: 'Unauthorized' });
+    }
+  };
 
-  // Check if the token exists
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  try {
-    // Verify the token
-    const decoded = jwt.verify(token, 'your-secret-key');
-
-    // Attach the user ID to the request object
-    req.userId = decoded.userId;
-
-    // Proceed to the next middleware
-    next();
-  } catch (error) {
-    console.error(error);
-    res.status(401).json({ error: 'Unauthorized' });
-  }
-};
 
 // Routes
 
@@ -183,11 +184,18 @@ app.post('/login', async (req, res) => {
   
       // Generate a JWT token
       const token = jwt.sign({ userId: user._id }, 'your-secret-key');
-  
+      const userProfile = {
+        id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      nationality: user.nationality,
+      favorites: user.favorites,
+      photo: user.photo,
+      };
       // Send the token in the response
-      res.json({ token });
+      res.json({ token, userData: userProfile });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Server Error' });
     }
   });
@@ -203,3 +211,47 @@ app.get('/protected', requireAuth, (req, res) => {
 
   res.json({ message: 'Protected route accessed successfully' });
 });
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+
+  jwt.verify(token, 'your-secret-key', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    req.userId = decoded.userId;
+    next();
+  });
+};
+
+
+app.get('/user/profile', requireAuth, async (req, res) => {
+    try {
+      // Find the user by ID
+      const user = await User.findById(req.userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Customize the user profile data to your needs
+      const userProfile = {
+        id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      nationality: user.nationality,
+      favorites: user.favorites,
+      photo: user.photo,
+      };
+  
+      res.json({ token, userData: userProfile });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
