@@ -10,24 +10,31 @@ const SignUp = () => {
   const [lastName, setLastName] = useState('');
   const [nationality, setNationality] = useState('');
   const [password, setPassword] = useState('');
-  const [photo, setPhoto] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Create an object with the form data
     const formData = {
       email,
       firstName,
       lastName,
       nationality,
       password,
-      photo,
     };
     try {
-      const response = await axios.post("http://localhost:8000", formData);
-      console.log(response.data); // Handle the response data
+      const response = await axios.post('http://localhost:8000/users', formData);
+      if (response.status === 201) {
+        // User was successfully saved
+        // Reset form fields
+        setEmail('');
+        setFirstName('');
+        setLastName('');
+        setNationality('');
+        setPassword('');
+      } else {
+        // Handle error response
+      }
     } catch (error) {
-      console.error(error); // Handle any errors
+      // Handle fetch or server connection error
     }
   };
 
@@ -38,16 +45,16 @@ const SignUp = () => {
   return (
     <form onSubmit={handleSubmit}>
       <label>Email:</label>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
       <label>First Name:</label>
-      <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+      <input type="text" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
 
       <label>Last Name:</label>
-      <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+      <input type="text" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
 
       <label>Nationality:</label>
-      <select value={nationality} onChange={handleNationalityChange} required>
+      <select value={nationality} name="nationality" onChange={handleNationalityChange} required>
         <option value="">Select a country</option>
         {countries.map((country) => (
           <option key={country} value={country}>
@@ -57,10 +64,7 @@ const SignUp = () => {
       </select>
 
       <label>Password:</label>
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
-      <label>Photo:</label>
-      <input type="file" value={photo} onChange={(e) => setPhoto(e.target.value)} />
+      <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
       <button type="submit">Submit</button>
     </form>
