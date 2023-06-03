@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = new mongoose.Schema({
-<<<<<<< HEAD
-=======
   email: {
     type: String},
->>>>>>> 9e5adc1dccfe9cdab064fde95a25011b20da433a
   name: {
     type: String,
     required: true,
