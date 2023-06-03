@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = new mongoose.Schema({
-  email: {
-    type: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   name: {
