@@ -1,17 +1,29 @@
 import React from "react";
 import "./Item.css";
-import { useLocation } from "react-router-dom";
-
 
 function Item() {
-  const location = useLocation();
-  const props = location.state.props;
-  console.log(props)
-  
-  return <div>Item
-    <div>{props.e[0]}</div>
-    <img src={props.e[1]} className="photo"/>
-  </div>;
+  return (
+    <div className='item'>
+    <div className="form-container-it">
+      <div className="par12-it">
+        <div className="imgg">
+          <img src={require('./photo10.jpg')} alt="" />
+        </div>
+        <div className="descr">
+        <b>Recipe:</b> Garden Fresh Salad
+                <br />
+                <br />
+<b>Description:</b> <br /><br />This garden fresh salad is a delightful combination of crisp vegetables, tangy dressing, and a sprinkle of cheese. It's a light and healthy option packed with vitamins and flavors that will leave you feeling refreshed and satisfied.
+<br />
+                <br />
+<b>Category:</b> Main Courses
+<br /><br />
+<b>BY:</b> Yasmine Mahmoudi
+        </div>
+      </div>
+    </div>
+  </div>
+  )
 }
 
 export default Item;

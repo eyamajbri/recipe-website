@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+
 const recipeSchema = new mongoose.Schema({
-  user:{
-    type:String
-  }, 
-  title: {
+  email: {
+    type: String},
+  name: {
     type: String,
     required: true,
   },
@@ -26,6 +26,16 @@ const recipeSchema = new mongoose.Schema({
   nb_likes: {
     type: Number,
     default: 0,
+  },
+  date: {
+    type: String,
+    default: () => {
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      const year = currentDate.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
   }
 });
 

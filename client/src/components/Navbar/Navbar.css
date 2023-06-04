@@ -1,649 +1,114 @@
-
-/* navbar (logo+navbar-container) */
-.allNavBar {
-    background-color: #40485B;
+/* Navbar container */
+.navbar {
     display: flex;
-    /* font-size: 110%; */
-  
-    
-  }
-  
-  /* hbc(home+shop+contacts)+searchbar */
-  .navBar-container {
-    background-color: #40485B;
-    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #f2f2f2;
     justify-content: center;
     align-items: center;
-    gap:7vw;
-    margin-left: 13%;
   }
   
-  /* home+shop+contacts */
-  .hbc{
-    display:flex;
-    align-items: center;
-    gap:2vw;
-  }
-  
-  .searchbar{
-    display: flex;
-    width: 50%;
-  }
-  
-  .respNavBar{
-    display:none;
-  }
-  
-  .elemi a {
-    color: #fff;
-    font-size: 20px;
+  /* Navbar links */
+  .lien {
+    margin-bottom: 10px;
     text-decoration: none;
-    font-weight:500;
+    color: #333;
   }
   
-  .elemi a:hover {
-    color: #e5c492;
-  
+  /* Search input */
+  .search {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
-  
-  
-  .aaaa{
-    background-color: #F8F8F8;
-    width: 33px;
-    height:1.5px;
+  /* Search results container */
+  .divv {
+    overflow-y: scroll;
+    max-height: 200px;
   }
   
-  
-  /* .elemi {
-    padding: 2px 2vh;
-  } */
-  
-  .search{
-    width: 20px;
-    height: auto;
+  /* Search results list */
+  .divv ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   
-  .btnMenu {
-    background-color: transparent;
-    /* display: none; */
-    
-    width: 24px;
-    height: auto;
-    margin-bottom: 3px;
-    color: #fff;
-  
-  
-  }
-  
-  .loop{
-    height: 24px;
-    width: auto;
-  }
-  
-  .inputText {
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 110%;
-    border-bottom: 0.2vh solid white;
-    width: 17vw;
+  /* Search results list items */
+  .divv ul li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
     margin-bottom: 5px;
-  
   }
   
-  .loopBtn{
-    border: none;
+  /* Profile photo */
+  .navbar img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  /* Logout button */
+  .navbar button {
     background-color: transparent;
-    font-size: 12px;
-  }
-  
-  
-  
-  
-  
-  .searchloop {
-    
-    color: #ffffff;
-    font-size: 70px;
-  }
-  
-  div.rights{
-    width:30vw;
-  }
-  
-   .logoNB {
-    width:9%;
-    height: auto;
-    margin-left: 15px;
-    padding-top: 10px;
-    padding-bottom: 15px;
-    
-  
-  }  
-  
-  
-  .searchloop:hover{
-    color: #e5c492;
-  }
-  .loopBtn:hover{
-    
+    border: none;
     cursor: pointer;
-    
-    
-  
+    color: #333;
   }
   
-  .bar2{
-    
+  /* Profile name */
+  .navbar p {
+    margin: 0;
+  }
+  
+  /* Login link */
+  .navbar .lien:last-child {
+    background-color: rgb(76, 106, 61);
+    color: #fff;
+    padding: 10px 20px;
+  }
+  
+
+.avant{
     display: flex;
-    align-items: center;
-    justify-content: end;
-  }
-  
-  .bar2 input{
-    width:200px;
-    border-bottom: 0.4vh solid #E8C895;
-  
-  }
-  .elem a{
-    font-size: larger;
-  }
-  
-  
-  ::-moz-selection {
-    background: #E8C895;
-  }
-  
-  ::selection {
-    background: #E8C895;
-  }
-  
-  ::-moz-selection {
-    background: #E8C895;
-  }
-  
-  
-  
-  
-   
-   @media screen and (max-width: 920px) {
-    .navBar-container {
-      padding: 10px 20px;;
-    }
-  } 
-  
-   @media screen and (max-width: 570px) {
-    
-    .navBar-container{
-      display: none;
-    }
-    .respNavBar{
-      display: grid;
-      
-      
-    }
-    .firstPart{
-      background-color: #40485B;
-      display: flex;
-      justify-content: end;
-      gap:4%;
-      align-items: center;
-      width: 70vw;
-      
-    }
-    
-    .secondPart{
-      border:solid;
-      position: absolute;
-      top: 73px;
-      left: 0;
-      background-color: #fff;
-      width: 99.12%; 
-      display: grid;
-      color: #40485B;
-      grid-template-columns: 100%;
-      grid-row: 30% 30% 30%;
-      justify-content: center;
-      align-items: center; 
-      text-align: center;  
-      z-index: 100;
-    }
-  
-    .last{
-      height: 40px;
-    }
-  
-    
-  .elemm{
-     
-     color: #40485B;
-    
-    font-size: 20px;
-    font-weight: 500;
+    gap:20%;
+    margin-right:30%;
+}
+
+.divv li{
     text-decoration: none;
-    height: 60px;
-  }
-  
-  
-  .elemm:hover {
-    color: #e5c492;
-    cursor: pointer;
-  
-  }
-  .elemm1{
-  margin-top: 10px;}
-   }  
-  
-   @media(max-width:900px){
-    .navBar-container{
-      margin-left: 20px;
-    }
-   }
-  
-  
-  
-  @media(max-width:550px){
-    .secondPart{
-      width: 99.1%; 
-  
-    }
     
-  }
-  @media(max-width:489px){
-    .secondPart{
-      width: 99%; 
-  
-    }
-    
-    
-  }
-  @media(max-width:441px){
-    .secondPart{
-      width: 98.9%; 
-  
-    }
-    
-  }
-  @media(max-width:401px){
-    .secondPart{
-      width: 98.8%; 
-  
-    }
-    
-  }
-  @media(max-width:367px){
-    .secondPart{
-      width: 98.7%; 
-  
-    }
-    
-  }
-  @media(max-width:339px){
-    .secondPart{
-      width: 98.6%; 
-  
-    }
-    
-  }
-  @media(max-width:314px){
-    .secondPart{
-      width: 98.5%; 
-  
-    }
-    
-  }
-  @media(max-width:293px){
-    .secondPart{
-      width: 98.4%; 
-  
-    }
-    
-  }
-  
-  @media(max-width:466px){
-    .bar2 input{
-      width:160px;
-    }
-    .allNavBar{
-      grid-template-columns: 40% 55%;
-  
-    }
-  }
-  
-  
-  @media(max-width:355px){
-    .bar2 input{
-      width:130px;
-    }
-    
-  }
-  @media(max-width:328px){
-    .bar2 input{
-      width:120px;
-    }
-    
-  }
-  @media(max-width:305px){
-    .bar2 input{
-      width:100px;
-    }
-    
-  
-  }
-  @media (max-width:1205px) {
-    nav.navBar-container{
-      margin-left: 15%;
-    }
-    
-  }
-  @media (max-width:1080px) {
-    nav.navBar-container{
-      margin-left: 13.5%;
-    }
-    
-  }
-  @media (max-width:1140px) {
-    nav.navBar-container{
-      margin-left: 14%;
-    }
-    
-  }
-  @media (max-width:1015px) {
-    nav.navBar-container{
-      margin-left: 12%;
-    }
-    
-  }
-  
-  @media (max-width:950px) {
-    nav.navBar-container{
-      margin-left: 11%;
-    }
-    
-  }
-  @media (max-width:920px) {
-    nav.navBar-container{
-      margin-left: 9%;
-    }
-    
-  }
-  @media (max-width:891px) {
-    nav.navBar-container{
-      margin-left: 7.5%;
-    }
-    
-  }
-  @media (max-width:870px) {
-    nav.navBar-container{
-      margin-left: 5%;
-    }
-    .logoNB{
-      width: 12%;
-    }
-    
-  }
-  @media (max-width:820px) {
-    nav.navBar-container{
-      margin-left: 7.5%;
-    }
-    .hbc div a{
-      font-size: medium;
-    }
-    
-  }
-  @media (max-width:793px) {
-    nav.navBar-container{
-      margin-left: 7%;
-    }
-    
-    
-  }
-  @media (max-width:770px) {
-    nav.navBar-container{
-      margin-left: 6%;
-    }
-    
-    
-  }
-  @media (max-width:738px) {
-    nav.navBar-container{
-      margin-left: 5%;
-    }
-    .logoNB{
-      width: 12%;
-    }
-    
-  }
-  @media (max-width:738px) {
-    nav.navBar-container{
-      margin-left: 4%;
-    }
-    
-    
-  }
-  @media (max-width:665px) {
-    nav.navBar-container{
-      margin-left: 3%;
-    }
-    
-    
-  }
-  @media (max-width:630px) {
-    nav.navBar-container{
-      margin-left: 1%;
-    }
-    .loop{
-      height: 20px;
-    }
-    
-    
-  }
-  @media (max-width:630px) {
-    nav.navBar-container{
-      margin-left: 3.5%;
-    }
-    .hbc div a{
-      font-size: small;
-    }
-  
-  }
-  @media (max-width:570px) {
-    .logoNB{
-      width: 18%;
-    }
-    .firstPart{
-      margin-left: 15px;
-    }
-  
-  }
-  @media (max-width:527px) {
-    
-    .secondPart{
-      top:72px;
-    }
-  
-  }
-  @media (max-width:518px) {
-    
-    .secondPart{
-      top:71px;
-    }
-  
-  }
-  @media (max-width:508px) {
-    
-    .secondPart{
-      top:70px;
-    }
-  
-  }
-  @media (max-width:508px) {
-    
-    .secondPart{
-      top:69px;
-    }
-  
-  }
-  @media (max-width:482px) {
-    
-    .secondPart{
-      top:68px;
-    }
-  
-  }
-  @media (max-width:474px) {
-    
-    .secondPart{
-      top:67px;
-    }
-  
-  }
-  @media (max-width:465px) {
-    
-    .secondPart{
-      top:66px;
-    }
-  
-  }
-  @media (max-width:456px) {
-    
-    .secondPart{
-      top:64px;
-    }
-  
-  }
-  @media (max-width:429px) {
-    
-    .secondPart{
-      top:63px;
-    }
-  
-  }
-  @media (max-width:420px) {
-    
-    .secondPart{
-      top:62px;
-    }
-  
-  }
-  @media (max-width:411px) {
-    
-    .secondPart{
-      top:61px;
-    }
-  
-  }
-  @media (max-width:393px) {
-    
-    .secondPart{
-      top:60px;
-    }
-  
-  }
-  @media (max-width:385px) {
-    
-    .secondPart{
-      top:59px;
-    }
-  
-  }
-  @media (max-width:376px) {
-    
-    .secondPart{
-      top:58px;
-    }
-  
-  }
-  @media (max-width:367px) {
-    
-    .secondPart{
-      top:66px;
-    }
-    .logoNB{
-      width: 23%;
-    }
-    .firstPart{
-      margin-left:-10px;
-    }
-  
-  }
-  @media (max-width:357px) {
-    
-    .secondPart{
-      top:65px;
-    }
-  
-  }
-  
-  
-  @media (max-width:343px) {
-    
-    .secondPart{
-      top:64px;
-    }
-  
-  }
-  @media (max-width:336px) {
-    
-    .secondPart{
-      top:63px;
-    }
-  
-  }
-  @media (max-width:330px) {
-    
-    .secondPart{
-      top:62px;
-    }
-  
-  }
-  @media (max-width:322px) {
-    
-    .secondPart{
-      top:61px;
-    }
-  
-  }
-  @media (max-width:308px) {
-    
-    .secondPart{
-      top:60px;
-    }
-  
-  }
-  @media (max-width:301px) {
-    
-    .secondPart{
-      top:59px;
-    }
-  
-  }
-  @media (max-width:294px) {
-    
-    .secondPart{
-      top:58px;
-    }
-  
-  }
-  @media (max-width:287px) {
-    
-    .secondPart{
-      top:57px;
-    }
-  
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-   
-  
-  
-  
-  
-  
+}
+a.lien{
+    padding: 10px 20px;
+}
+
+.divv li{
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin-right:200px;
+
+}
+.photoo{
+  margin-top: 10px;
+}
+
+.nom{
+  margin-top: 15px;
+  text-decoration: none;
+  margin-left:-80px;
+  color: black;
+}
+.navbar{
+  font-size: larger;
+  padding-right: 10%;
+}
+.logout{
+  font-size: larger;
+}

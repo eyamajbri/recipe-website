@@ -1,11 +1,14 @@
-/*import React from "react";
-import {useState} from 'react'
-import { useEffect } from 'react';
+import React from 'react';
+import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import './Navbar.css';
 
-function Navbar() {
+export default function Navbar() {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [searchLetter, setSearchLetter] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showResults, setShowResults] = useState(false); // Track whether to show search results or not
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -22,152 +25,88 @@ function Navbar() {
     };
   
     fetchRecipes();
-    }, []);
+  }, []);
 
-
-    useEffect(() => {
-      const fetchUsers = async () => {
-        try {
-          setIsLoading(true); 
-          const response = await fetch("http://localhost:8000/users");
-          const data = await response.json();
-          setUsers(data);
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-    
-      fetchUsers();
-      }, []);
-  console.log('****************')
-  console.log(users)
-
-  function handleClick(){
-    let search=document.querySelector(".searchBar")
-    console.log(search.target.value)
-
-  }
-  return <div>
-    <input type="text" value="" name="" classname="searchBar"></input>
-    <button onclick={handleClick}>click</button>
-  </div>;
-}
-
-export default Navbar;*/
-import React, {useState, useEffect} from 'react'
-// import logoNavBar from'./../assets/logoNavBar.png';
-// import menuToggle from './../assets/menuToggle.png';
-// import loop from './../assets/loop.png';
-// import search from './../assets/search.png';
-
-
-import './Navbar.css'
-
-function NavBar() {
-  // toggle Menu
-    const [toggleMenu, setToggleMenu] = useState(false)
-     const toggleNav = () => {
-        setToggleMenu(!toggleMenu)
-     }
-     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
-     useEffect(() => {
-
-       const changeWidth = () => {
-          setScreenWidth(window.innerWidth);
-        }
-    
-        window.addEventListener('resize', changeWidth)
-    
-       }, [])
-
-      useEffect(() => {
-        const changeWidth = () => {
-           setScreenWidth(window.innerWidth);
-        }
-         return () => {
-            window.removeEventListener('resize', changeWidth)
-        }
-      }, [])
-// search bar
-    useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 570px)");
-    const handleMediaQueryChange = (e) => {
-        setToggleMenu(false);
-        };
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
-       }, []);
-
-// search bar
-const [displayInput, setDisplayInput] = useState(false);
-useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 570px)");
-    const handleMediaQueryChange = (e) => {
-        setDisplayInput(false);
-        };
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
-       }, []);
-
-
-    return (
-      
-       <div className='allNavBar'>
-        
-        <img className='logoNB' src="" />
-        
-        <nav   className='navBar-container'>
-        
-            
-             {((toggleMenu || screenWidth > 300) && (<div className='hbc' >
-                
-                <div className='elem elemi'><a href="#">HOME</a></div>
-                <div className='aaaa'></div>
-                <div className='elem elemi'><a href="#">SHOP</a></div>
-                <div className='aaaa'></div>
-                <div className='elemi elemi3' ><a href="#">CONTACTS</a></div>
-              
-                
-            </div>))}
-                  <div className='searchbar'>
-                  <input type="text"  className='inputText' /> 
-                  <button className='loopBtn ' type="submit" > 
-                  <img src="" className='loop'/>
-                  </button>
-                  </div>
-                         
-        </nav>
-
-
-        
-        <div className='respNavBar'>
-
-          <div className='firstPart'>
-              
-
-
-          <div className='searchbar bar2'>
-                  { (displayInput) && (<input type="text"  className='inputText' /> )}
-                  <button className='loopBtn ' type="submit"  onClick={() => setDisplayInput(!displayInput)}> 
-                  <img src="" className='search'/>
-                  </button>
-          </div>
-                  
-
-          {(toggleMenu ) && ((<div className='secondPart'>
-                
-                <div className='elemm1'><a className='elemm' href="#">HOME</a><hr></hr></div>
-                <div ><a className='elemm' href="#">SHOP</a><hr></hr></div>
-                <div className='last'><a className='elemm' href="#">CONTACTS</a></div>
-          </div>))}
-          <img src="" className='btnMenu' onClick={() => setToggleMenu(!toggleMenu)}/></div>
-        
-        
-    </div>
-      </div>
-        
-    )
+  useEffect(() => {
+    if (searchLetter === "") {
+      setSearchResults(recipes);
+    } else {
+      const filteredRecipes = recipes.filter(recipe =>
+        recipe.name.startsWith(searchLetter)
+      );
+      setSearchResults(filteredRecipes);
     }
+    setShowResults(searchLetter !== ""); // Show results only when there is a filter
+  }, [searchLetter, recipes]);
 
-export default NavBar;
+  function handleSearchLetterChange(event) {
+    setSearchLetter(event.target.value);
+  }
 
+  let navigate = useNavigate();
+
+  const navigateToRecipe = (recipeId) => {
+    navigate(`/item/${recipeId}`);
+  };
+  
+  if (localStorage.getItem('token')) {
+    return (
+      <div className='navbar'>
+        <div className='avant'>
+          <Link className='lien' to="/">Home</Link>
+          <Link className='lien' to="/recipe">recipe</Link>
+          <input
+            type="text"
+            value={searchLetter}
+            onChange={handleSearchLetterChange}
+            placeholder="Enter a letter to search"
+          />
+         <Link to="/profil"><img src={`http://localhost:8000/uploads/${localStorage.getItem('photo')}`} alt="Profile Photo" className='photoo'/></Link>
+        <Link to="/profil" className='nom'><p className='logout'>{localStorage.getItem('name')}</p></Link>
+        <button onClick={() => { navigate("/login"); localStorage.removeItem("token") }}>logout</button>
+        <Link className='lien' to="/Ajout">Ajouter</Link>
+        </div>
+        {showResults && (
+          <div className='divv'>
+            <ul>
+              {searchResults.map(recipe => (
+                <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)}>
+                 <img src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Photo" width={12}/>               
+                  {recipe.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className='navbar'>
+      <div className='avant'>
+        <Link className='lien' to="/">Home</Link>
+        <Link className='lien' to="/recipe">recipe</Link>
+        <input className='search'
+          type="text"
+          value={searchLetter}
+          onChange={handleSearchLetterChange}
+          placeholder="Enter a letter to search"
+        />
+        <Link className='lien' to="/signup">signup</Link>
+        <Link className='lien' to="/login" style={{backgroundColor: 'rgb(76, 106, 61)',color: '#fffff'}}>login</Link>
+      </div>
+      {showResults && (
+        <div style={{ overflowY: "scroll", maxHeight: "200px" }}>
+          <ul>
+            {searchResults.map(recipe => (
+              <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)}>
+                <img src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Photo" width={12}/>              {recipe.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}

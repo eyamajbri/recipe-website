@@ -3,14 +3,54 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
+const Comment = require('./models/Comment');
 const morgan = require('morgan');
 const bcryptjs = require('bcryptjs');
 const createUserValidation = require('./Validation/createUserValidation');
 const jwt = require('jsonwebtoken'); 
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const filename = `${uniqueSuffix}${path.extname(file.originalname)}`;
+    cb(null, filename);
+  }
+});
+
+
+
+const upload = multer({ storage });
+
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors())
+
+app.post("/upload", upload.single('profile'),(req,res)=>{
+  console.log(req)
+})
+
+
+
+
+
+
+
+
+
+app.use('/uploads', express.static('uploads'));
+
+app.post('/images', upload.single('profile'), (req, res) => {
+  console.log(req.file);
+  res.json({
+    success: 1,
+    profile_url: `http://localhost:8000/profile/${req.file.filename}`
+  });
+});
 
 // Middleware to log requests
 app.use(morgan('dev'));
@@ -39,27 +79,28 @@ function connectDB() {
 
 // Middleware for authentication
 const requireAuth = (req, res, next) => {
-  const token = req.header('Authorization');
+    const token = req.header('Authorization');
+  
+    // Check if the token exists
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  
+    try {
+      // Verify the token
+      const decoded = jwt.verify(token, 'your-secret-key');
+  
+      // Attach the user ID to the request object
+      req.userId = decoded.userId;
+  
+      // Proceed to the next middleware
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ error: 'Unauthorized' });
+    }
+  };
 
-  // Check if the token exists
-  if (!token) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  try {
-    // Verify the token
-    const decoded = jwt.verify(token, 'your-secret-key');
-
-    // Attach the user ID to the request object
-    req.userId = decoded.userId;
-
-    // Proceed to the next middleware
-    next();
-  } catch (error) {
-    console.error(error);
-    res.status(401).json({ error: 'Unauthorized' });
-  }
-};
 
 // Routes
 
@@ -75,10 +116,9 @@ app.get('/users', async (req, res) => {
 });
 
 // Create a new recipe
-app.post('/recipes', requireAuth, async (req, res) => {
+/*app.post('/recipes', requireAuth, async (req, res) => {
   try {
     const {
-      
       title,
       description,
       ingredients,
@@ -88,10 +128,10 @@ app.post('/recipes', requireAuth, async (req, res) => {
     } = req.body;
 
     // Access the logged-in user's ID from req.userId
-    // const user = req.userId;
+    const user = req.userId;
 
     const newRecipe = new Recipe({
-      user:"",
+      user,
       title,
       description,
       ingredients,
@@ -107,10 +147,10 @@ app.post('/recipes', requireAuth, async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-});
+});*/
 
 // Create a new user
-app.post('/users', async (req, res) => {
+app.post('/users',upload.single('profile'), async (req, res) => {
   try {
     console.log(req.body);
     const validation = createUserValidation.validate(req.body);
@@ -124,8 +164,7 @@ app.post('/users', async (req, res) => {
       firstName,
       lastName,
       nationality,
-      favorites,
-      photo,
+      photo 
     } = validation.value;
 
     let userAlreadyExist = await User.findOne({ email });
@@ -142,8 +181,8 @@ app.post('/users', async (req, res) => {
       lastName,
       nationality,
       password: hashedPassword,
-      favorites,
-      photo,
+      favorites:"",
+      photo: req.file.filename,
     });
     await user.save();
 
@@ -153,6 +192,79 @@ app.post('/users', async (req, res) => {
     res.status(500).json({ error: 'Server Error' });
   }
 });
+
+
+
+
+
+app.post('/recipes', upload.single('image'), async (req, res) => {
+  const { email, name, description, ingredients, category } = req.body;
+
+  // Save the submitted recipe to the database
+  try {
+    const recipe = new Recipe({
+      email,
+      name,
+      description,
+      ingredients,
+      category,
+      image: req.file.filename,
+    });
+    await recipe.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error saving recipe:', error);
+    res.sendStatus(500);
+  }
+});
+
+// Get comments for a recipe
+app.get('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+
+  try {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    const comments = recipe.comments;
+    res.json(comments);
+  } catch (error) {
+    console.error('Error retrieving comments:', error);
+    res.status(500).json({ message: 'Error retrieving comments' });
+  }
+});
+
+// Add a new comment to a recipe
+app.post('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+  const { user, comment } = req.body;
+
+  try {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    const newComment = { user, comment };
+    recipe.comments.push(newComment);
+    await recipe.save();
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ message: 'Error adding comment' });
+  }
+});
+
+
+
+
+
+
+
+
 
 // Get all recipes
 app.get('/recipes', async (req, res) => {
@@ -178,7 +290,7 @@ app.post('/login', async (req, res) => {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
   
-      // Compare the provided password with the hashed password
+      // Check if the password is valid
       const isPasswordValid = await bcryptjs.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Invalid credentials' });
@@ -186,11 +298,18 @@ app.post('/login', async (req, res) => {
   
       // Generate a JWT token
       const token = jwt.sign({ userId: user._id }, 'your-secret-key');
-  
+      const userProfile = {
+        id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      nationality: user.nationality,
+      favorites: user.favorites,
+      photo: user.photo,
+      };
       // Send the token in the response
-      res.json({ token });
+      res.json({ token, userData: userProfile });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: 'Server Error' });
     }
   });
@@ -206,3 +325,103 @@ app.get('/protected', requireAuth, (req, res) => {
 
   res.json({ message: 'Protected route accessed successfully' });
 });
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+
+  jwt.verify(token, 'your-secret-key', (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    req.userId = decoded.userId;
+    next();
+  });
+};
+
+
+app.get('/user/profile', requireAuth, async (req, res) => {
+    try {
+      // Find the user by ID
+      const user = await User.findById(req.userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Customize the user profile data to your needs
+      const userProfile = {
+        id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      nationality: user.nationality,
+      favorites: user.favorites,
+      photo: user.photo,
+      };
+  
+      res.json({ token, userData: userProfile });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server Error' });
+    }
+  });
+
+  
+// Get comments for a recipe
+app.get('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+
+  try {
+    const comments = await Comment.find({ recipe: recipeId });
+    res.json(comments);
+  } catch (error) {
+    console.error('Error retrieving comments:', error);
+    res.status(500).json({ message: 'Error retrieving comments' });
+  }
+});
+
+// Add a new comment to a recipe
+app.post('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+  const { user, comment } = req.body;
+
+  try {
+    const newComment = new Comment({
+      recipe: recipeId,
+      user,
+      comment,
+    });
+    await newComment.save();
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ message: 'Error adding comment', error: error.message });
+  }
+});
+
+
+
+app.put('/recipes/:id', upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const { nb_likes } = req.body;
+
+  try {
+    // Find the recipe by ID and update the nb_likes attribute
+    const recipe = await Recipe.findByIdAndUpdate(id, { nb_likes }, { new: true });
+
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' });
+    }
+
+    res.json(recipe);
+  } catch (error) {
+    console.error('Failed to update nb_likes:', error);
+    res.status(500).json({ error: 'Failed to update nb_likes' });
+  }
+});
+
