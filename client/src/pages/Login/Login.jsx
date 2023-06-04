@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userData, setUserData] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,9 +44,11 @@ const Login = () => {
 
   
         navigate('/Profil', { state: { userData } });
+        setSubmitStatus({ message: 'Recipe saved successfully', type: 'success' });
+
       } else {
-        // Handle error response
-        alert('Login failed');
+        setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
+
       }
     } catch (error) {
       // Handle fetch or server connection error
@@ -56,9 +60,16 @@ const Login = () => {
 
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>Email:</label>
+    <div className='log-in'>
+      <div className="form-container">
+        <div className="par22">
+        <form onSubmit={handleSubmit}>
+        <div class="box-outer">
+        <h1>Log In</h1>
+        <p>Welcome Back !</p>
+    </div>
+        <div className="form-control-sp">
+        <label><b>Email:</b></label>
         <input
           type="email"
           name="email"
@@ -66,8 +77,10 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        </div>
 
-        <label>Password:</label>
+        <div className="form-control-sp">
+        <label><b>Password:</b></label>
         <input
           type="password"
           name="password"
@@ -75,9 +88,14 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        </div>
+        {submitStatus && <div className={`alert ${submitStatus.type}`}>{submitStatus.message}</div>}
 
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
       </form>
+        </div>
+        <div className="par12"></div>
+      </div>
     </div>
   );
 };

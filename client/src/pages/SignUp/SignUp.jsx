@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getNames } from 'country-list';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './SignUp.css';
 
 
 const countries = getNames();
@@ -13,6 +14,7 @@ const SignUp = () => {
   const [nationality, setNationality] = useState('');
   const [password, setPassword] = useState('');
   const [photo, setPhoto] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -37,12 +39,15 @@ const SignUp = () => {
         setNationality('');
         setPassword('');
         setPhoto(null);
-        navigate('/login')
+        navigate('/login');
+        setSubmitStatus({ message: 'Recipe saved successfully', type: 'success' });
+
       } else {
-        // Handle error response
+        setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
+
       }
     } catch (error) {
-      // Handle fetch or server connection error
+      setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
     }
     console.log(photo)
   };
@@ -57,31 +62,52 @@ const SignUp = () => {
     setPhoto(file);
   };
   return (
-    <div>
-    <form onSubmit={handleSubmit} encType="multipart/form-data" >
-      <label>Email:</label>
+    <div className='sign-up'>
+      <div className="form-container">
+        <div className="par1">
+
+        </div>
+        <div className="par2">
+        <form onSubmit={handleSubmit} encType="multipart/form-data" >
+    <div class="box-outer">
+        <h1>Sign Up</h1>
+        <p>and oin this amazing community</p>
+    </div>
+    {submitStatus && <div className={`alert ${submitStatus.type}`}>{submitStatus.message}</div>}
+
+      <div className="form-control-sp">
+      <label><b>Email:</b></label>
       <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      </div>
 
-      <label>First Name:</label>
+      <div className="form-control-sp">
+      <label><b>First Name:</b>First Name:</label>
       <input type="text" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+      </div>
 
+      <div className="form-control-sp">
       <label>Last Name:</label>
       <input type="text" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+      </div>
 
-      <label>Nationality:</label>
+       <div className="form-control-sp">
+       <label>Nationality:</label>
       <select value={nationality} name="nationality" onChange={handleNationalityChange} required>
-        <option value="">Select a country</option>
+        <option value=""><p>Select a country</p></option>
         {countries.map((country) => (
           <option key={country} value={country}>
             {country}
           </option>
         ))}
       </select>
-
+      </div>
+      
+      <div className="form-control-sp">
       <label>Password:</label>
       <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      </div>
 
-      <div className="form-control">
+      <div className="form-control form-control-sp">
           <label>Product Image</label>
           <input
             type="file"
@@ -92,8 +118,10 @@ const SignUp = () => {
           />
         </div>
 
-      <button type="submit">Submit</button>
+      <button type="submit">Sign up</button>
     </form>
+        </div>
+      </div>
     </div>
   );
 };

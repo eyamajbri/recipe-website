@@ -5,20 +5,29 @@ import { FaRegComment } from 'react-icons/fa';
 import axios from 'axios';
 
 function Blanc(props) {
-  console.log(props.e[3]);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(props.e[1]);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (token) {
-      // Check if the user has already liked this item
-      const userLiked = localStorage.getItem(`like_${props.e[3]}`);
-      if (userLiked) {
-        setIsLiked(true);
-      }
+      fetchLikeStatus();
     }
   }, [props.e[3], token]);
+
+  const fetchLikeStatus = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/recipes/${props.e[3]}/like-status`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setIsLiked(response.data.isLiked);
+    } catch (error) {
+      console.error('Failed to fetch like status:', error);
+    }
+  };
 
   const handleLikeClick = async () => {
     if (!token) {
@@ -33,11 +42,15 @@ function Blanc(props) {
     setLikeCount(updatedLikeCount);
 
     try {
-      // Update nb_likes in the database and set local storage for the current user
-      await Promise.all([
-        axios.put(`http://localhost:8000/recipes/${props.e[3]}`, { nb_likes: updatedLikeCount }),
-        localStorage.setItem(`like_${props.e[3]}`, !isLiked),
-      ]);
+      // Update nb_likes in the database
+      await axios.put(`http://localhost:8000/recipes/${props.e[3]}`, { nb_likes: updatedLikeCount }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Update local storage for the current user
+      localStorage.setItem(`like_${props.e[3]}`, !isLiked);
     } catch (error) {
       console.error('Failed to update nb_likes or local storage:', error);
     }
@@ -54,14 +67,13 @@ function Blanc(props) {
         <hr />
         <table className="reaction">
           <tbody>
-            <tr className="rreact">
-              <th onClick={handleLikeClick} className="heartdiv">
+            <tr>
+              <th onClick={handleLikeClick}>
                 {token && isLiked ? <BsHeartFill /> : <BsHeart />}
-               <div className="heart"> {likeCount}</div>
+                {likeCount}
               </th>
-              <th className="heartdiv">
-                <FaRegComment /> 
-                <div>20</div>
+              <th>
+                <FaRegComment /> 20
               </th>
             </tr>
           </tbody>

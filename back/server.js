@@ -206,7 +206,7 @@ app.post('/recipes', upload.single('image'), async (req, res) => {
       email,
       name,
       description,
-      ingredients: ingredients.split(',').map((ingredient) => ingredient.trim()),
+      ingredients,
       category,
       image: req.file.filename,
     });
@@ -424,5 +424,4 @@ app.put('/recipes/:id', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to update nb_likes' });
   }
 });
-
 
