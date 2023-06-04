@@ -1,0 +1,43 @@
+.item {
+    background-image: url('./pic4.png');
+    font-family: Verdana;
+    text-align: center;
+}
+.form-container-it h1{
+    font-family: 'Merienda', cursive;    
+    font-size: 40px;
+    font-style: oblique;
+}
+.form-container-it p{
+    font-family: 'Merienda', cursive;
+    font-style: oblique;
+    font-size: 20px;
+}
+
+
+.form-container-it{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.par12-it{
+    background-color: #f7f7f2;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: 1100px;
+    height: auto;
+    border-radius: 10px;
+    transform: scale(0.9);
+    margin:200px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+.par12-it img{
+    width: 500px;
+    height: auto;
+}
+.descr{
+    margin: 30px;
+}

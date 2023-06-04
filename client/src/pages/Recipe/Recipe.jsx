@@ -1,14 +1,40 @@
-import React from "react";
+import React , {useState,useEffect} from "react";
 import {BsHeart } from 'react-icons/bs'
 import { FaRegComment } from 'react-icons/fa';
 import "./Recipe.css";
 
 function Recipe() {
+  const [featuredImage, setFeaturedImage] = useState('');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const images = [
+      require('./img/photo93.jpg'),
+      require('./img/photo17.jpg'),
+      require('./img/home22.jpg')
+    ];
+    let currentIndex = 0;
+
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      currentIndex = (currentIndex + 1) % images.length;
+      setFeaturedImage(images[currentIndex]);
+    }, 5000);
+
+    const transitionTimeout = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(transitionTimeout);
+    };
+  }, []);
   return ( 
     <div>
       <div className="container-recipe">
-        <div className="box-13">
-          <img src={require('./img/photo93.jpg')}  />
+      <div className={`box-13 ${isTransitioning ? 'transitioning' : ''}`}>
+          <img src={featuredImage} alt="Loading" />
             <div className="text-container-h">
                 <h1>DELICIOUS RECIPES <br />DAILY UPDATED</h1>
                 <p>Daily new Recipes and Cooking tips</p>
