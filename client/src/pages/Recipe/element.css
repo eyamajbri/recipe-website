@@ -1,0 +1,68 @@
+.element {
+    font-size: larger;
+    width: 100%;
+    height:500px;
+    border: 1px solid #707070;
+    border-radius: 2%;
+    overflow: hidden;
+    background-color: #F1F1F1;
+    cursor:pointer;
+}
+
+
+
+.img{
+    display: block;
+    background-color: #40485B;
+    width: 100%;
+    height: 300px;
+    border-top-left-radius:2%;
+    border-top-right-radius: 2%; 
+    object-fit: cover;
+    
+}
+
+.boutton{
+    border-radius: 11px;
+    width: 50%;
+    margin-left: 23.5%;
+    margin-top:10px;
+    height: 37px;
+    background-color: #40485B;
+    color:white;
+    font-family:'Quicksand';
+    padding: 0.5%;
+    font-size: 90%;
+    cursor: pointer;
+    border: none;
+    
+    
+}
+
+.title{
+    color:#1B2437;
+    font-size: larger;
+    width:60%;
+    height:30%;
+    padding-left: 9%;
+    padding-top: 10%;
+    font-family: Playfair Display;
+    
+}
+
+.desc{
+    color: #8E8E93;
+    font-size: small;
+    padding-left: 9%;
+    padding-top: 7%;
+}
+
+.btn{
+    margin-top: 8%;
+}
+.espace{
+    height: 40px;
+}
+
+
+
