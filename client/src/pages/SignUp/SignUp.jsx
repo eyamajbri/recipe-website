@@ -64,9 +64,7 @@ const SignUp = () => {
   return (
     <div className='sign-up'>
       <div className="form-container">
-        <div className="par1">
-
-        </div>
+        <div className="par1"></div>
         <div className="par2">
         <form onSubmit={handleSubmit} encType="multipart/form-data" >
     <div class="box-outer">
@@ -81,17 +79,17 @@ const SignUp = () => {
       </div>
 
       <div className="form-control-sp">
-      <label><b>First Name:</b>First Name:</label>
+      <label><b>First Name:</b></label>
       <input type="text" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
       </div>
 
       <div className="form-control-sp">
-      <label>Last Name:</label>
+      <label><b>Last Name:</b></label>
       <input type="text" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
       </div>
 
        <div className="form-control-sp">
-       <label>Nationality:</label>
+       <label><b>Nationality:</b></label>
       <select value={nationality} name="nationality" onChange={handleNationalityChange} required>
         <option value=""><p>Select a country</p></option>
         {countries.map((country) => (
@@ -103,12 +101,12 @@ const SignUp = () => {
       </div>
       
       <div className="form-control-sp">
-      <label>Password:</label>
+      <label><b>Password:</b></label>
       <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       </div>
 
-      <div className="form-control form-control-sp">
-          <label>Product Image</label>
+      <div className="form-control-sp">
+          <label><b>Product Image</b></label>
           <input
             type="file"
             className="form-control"
@@ -117,7 +115,7 @@ const SignUp = () => {
             onChange={handleFileChange}
           />
         </div>
-
+        {submitStatus && <div className={`alert ${submitStatus.type}`}>{submitStatus.message}</div>}
       <button type="submit">Submit</button>
     </form>
         </div>

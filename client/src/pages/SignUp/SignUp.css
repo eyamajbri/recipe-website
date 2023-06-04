@@ -1,8 +1,5 @@
 .sign-up {
     background-color: #f7f7f2;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
     font-family: Verdana;
     text-align: center;
 }
@@ -25,7 +22,6 @@
     display: flex;
     align-items: center;
     gap: 0px;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 .par1{
     background-color: brown;
@@ -34,11 +30,11 @@
     background-attachment: fixed;
     background-size: cover;
     width: 700px;
-    height: 760px;
+    height: 800px;
     border-radius: 10px;
-    transform: scale(0.9);
+    transform: scale(0.8);
     margin:0;
-    margin-right: -35px;
+    margin-right: -70px;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
 }
 .sign-up form {
@@ -47,11 +43,11 @@
     padding: 30px 20px;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
-    height: 760px;
+    height: 800px;
     padding-top: 0;
-    transform: scale(0.9);
+    transform: scale(0.8);
     margin: 0;
-    margin-left: -35px;
+    margin-left: -70px;
     padding-left: 50px;
 
 }
