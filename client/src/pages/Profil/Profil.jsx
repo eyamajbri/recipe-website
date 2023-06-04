@@ -31,7 +31,7 @@ const Profil = () => {
       <div className="container-product">
         <div className="box-1"></div>
         <div className="box-2">
-          <div className="bio">
+          <div className="bio">                
             <h1>{localStorage.getItem("name")} {localStorage.getItem("last")}</h1>
             <p>"An aspiring amateur chef who loves experimenting with flavors and enjoys sharing their culinary creations with others."</p>
           </div>

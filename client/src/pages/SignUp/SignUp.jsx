@@ -108,7 +108,7 @@ const SignUp = () => {
       </div>
 
       <div className="form-control form-control-sp">
-          <label>Product Image</label>
+          <label> Image</label>
           <input
             type="file"
             className="form-control"

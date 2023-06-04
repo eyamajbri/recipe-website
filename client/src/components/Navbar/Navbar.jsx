@@ -52,28 +52,40 @@ export default function Navbar() {
   if (localStorage.getItem('token')) {
     return (
       <div className='navbar'>
-        <div className='avant'>
-          <Link className='lien' to="/">Home</Link>
-          <Link className='lien' to="/recipe">Recipe</Link>
+        <div className='avant log'>
+          <div className="nav"><Link className='lien' to="/">Home</Link></div>
+          <div className="nav"><Link className='lien' to="/recipe">Recipes</Link></div>
+          <div className="nav">
           <input
+            className='search'
             type="text"
             value={searchLetter}
             onChange={handleSearchLetterChange}
             placeholder="Enter a letter to search"
-          />
-         <Link to="/profil"><img src={`http://localhost:8000/uploads/${localStorage.getItem('photo')}`} alt="Profile Photo" className='photoo'/></Link>
-        <Link to="/profil" className='nom'><p className='logout'>{localStorage.getItem('name')}</p></Link>
-        <button onClick={() => { navigate("/login"); localStorage.removeItem("token") }}>Log out</button>
-        <Link className='lien' to="/Ajout">Ajouter</Link>
+          /></div>  
+          <div className="nav"> <Link className='lien v3' to="/Ajout" style={{ backgroundColor: 'rgb(76, 106, 61)', color: '#fff' }}>Ajouter</Link></div>
+
+          <div className="nav">
+            <button className='btn-h' onClick={() => { navigate("/login"); localStorage.removeItem("token") }}>Logout</button>
+          </div>
+<div className="useeer">
+          <div className="nav">
+          <Link to="/profil"><img src={`http://localhost:8000/uploads/${localStorage.getItem('photo')}`}  className='photoo'/></Link>
+          </div>
+          
+          <div className="nav">
+            <Link to="/profil" className='nom'><p className='logout'>{localStorage.getItem('name')}</p></Link>
+          </div>
+          </div>
         </div>
         {showResults && (
           <div className='divv'>
             <ul>
               {searchResults.map(recipe => (
-                <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)}>
+              <Link to="/item" >  <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)} className='lista'>
                  <img src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Photo" width={12}/>               
                   {recipe.name}
-                </li>
+                </li></Link>
               ))}
             </ul>
           </div>
@@ -85,22 +97,28 @@ export default function Navbar() {
   return (
     <div className='navbar'>
       <div className='avant'>
-        <Link className='lien' to="/">Home</Link>
-        <Link className='lien' to="/recipe">recipe</Link>
-        <input className='search'
+        <div className="nav"><Link className='lien' to="/">Home</Link></div>
+        <div className="nav"> <Link className='lien' to="/recipe">Recipes</Link></div>
+        <div className="nav">
+          <input className='search'
           type="text"
           value={searchLetter}
           onChange={handleSearchLetterChange}
           placeholder="Enter a letter to search"
-        />
-        <Link className='lien' to="/signup"><span>Sign up</span></Link>
-        <Link className='lien' to="/login" style={{backgroundColor: 'rgb(76, 106, 61)',color: '#fffff'}}>login</Link>
+        /></div>
+        <div className="nav">
+        <Link className='lien' to="/signup">Sign Up</Link>
+        </div>
+        <div className="nav">       
+        <Link className="lien v3" to="/login" style={{ backgroundColor: 'rgb(76, 106, 61)', color: '#fff' }}>
+    Login
+  </Link></div>
       </div>
       {showResults && (
         <div style={{ overflowY: "scroll", maxHeight: "200px" }}>
           <ul>
             {searchResults.map(recipe => (
-              <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)}>
+              <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)} className='lista'>
                 <img src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Photo" width={12}/>              {recipe.name}
               </li>
             ))}
