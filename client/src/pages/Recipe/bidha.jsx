@@ -61,8 +61,7 @@ function Blanc(props) {
       <div className="h-recipe-description">
         <h5>{props.e[0]}</h5>
         <div className="chef">
-          <img src={require('./img/chef.jpg')} alt="Chef" />
-          <h6>Suzy Perry</h6>
+        <img src={`http://localhost:8000/uploads/${localStorage.getItem('photo')}`} alt="chef" />          <h6>{localStorage.getItem('name')} {localStorage.getItem('last')}</h6>
         </div>
         <hr />
         <table className="reaction">
