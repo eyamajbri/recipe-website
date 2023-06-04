@@ -81,7 +81,7 @@ const SignUp = () => {
       </div>
 
       <div className="form-control-sp">
-      <label><b>First Name:</b>First Name:</label>
+      <label><b>First Name:</b></label>
       <input type="text" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
       </div>
 

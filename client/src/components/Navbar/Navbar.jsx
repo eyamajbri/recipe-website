@@ -54,7 +54,7 @@ export default function Navbar() {
       <div className='navbar'>
         <div className='avant'>
           <Link className='lien' to="/">Home</Link>
-          <Link className='lien' to="/recipe">recipe</Link>
+          <Link className='lien' to="/recipe">Recipe</Link>
           <input
             type="text"
             value={searchLetter}
@@ -63,7 +63,7 @@ export default function Navbar() {
           />
          <Link to="/profil"><img src={`http://localhost:8000/uploads/${localStorage.getItem('photo')}`} alt="Profile Photo" className='photoo'/></Link>
         <Link to="/profil" className='nom'><p className='logout'>{localStorage.getItem('name')}</p></Link>
-        <button onClick={() => { navigate("/login"); localStorage.removeItem("token") }}>logout</button>
+        <button onClick={() => { navigate("/login"); localStorage.removeItem("token") }}>Log out</button>
         <Link className='lien' to="/Ajout">Ajouter</Link>
         </div>
         {showResults && (
@@ -93,7 +93,7 @@ export default function Navbar() {
           onChange={handleSearchLetterChange}
           placeholder="Enter a letter to search"
         />
-        <Link className='lien' to="/signup">signup</Link>
+        <Link className='lien' to="/signup"><span>Sign up</span></Link>
         <Link className='lien' to="/login" style={{backgroundColor: 'rgb(76, 106, 61)',color: '#fffff'}}>login</Link>
       </div>
       {showResults && (
