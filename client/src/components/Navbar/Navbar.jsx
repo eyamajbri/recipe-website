@@ -9,6 +9,7 @@ export default function Navbar(){
                 <p>{localStorage.getItem('name')}</p>
                 <Link to ="/">Home</Link>
                 <Link to ="/recipe">recipe</Link>
+                <Link to ="/Ajout">Ajouter</Link>
                 <button onClick={()=>{navigate("/login");localStorage.removeItem("token")}}>logout</button>
             </div>
         )
