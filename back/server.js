@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
+const Comment = require('./models/Comment');
 const morgan = require('morgan');
 const bcryptjs = require('bcryptjs');
 const createUserValidation = require('./Validation/createUserValidation');
@@ -217,6 +218,47 @@ app.post('/recipes', upload.single('image'), async (req, res) => {
   }
 });
 
+// Get comments for a recipe
+app.get('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+
+  try {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    const comments = recipe.comments;
+    res.json(comments);
+  } catch (error) {
+    console.error('Error retrieving comments:', error);
+    res.status(500).json({ message: 'Error retrieving comments' });
+  }
+});
+
+// Add a new comment to a recipe
+app.post('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+  const { user, comment } = req.body;
+
+  try {
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    const newComment = { user, comment };
+    recipe.comments.push(newComment);
+    await recipe.save();
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ message: 'Error adding comment' });
+  }
+});
+
+
 
 
 
@@ -327,3 +369,60 @@ app.get('/user/profile', requireAuth, async (req, res) => {
       res.status(500).json({ error: 'Server Error' });
     }
   });
+
+  
+// Get comments for a recipe
+app.get('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+
+  try {
+    const comments = await Comment.find({ recipe: recipeId });
+    res.json(comments);
+  } catch (error) {
+    console.error('Error retrieving comments:', error);
+    res.status(500).json({ message: 'Error retrieving comments' });
+  }
+});
+
+// Add a new comment to a recipe
+app.post('/recipes/:recipeId/comments', async (req, res) => {
+  const { recipeId } = req.params;
+  const { user, comment } = req.body;
+
+  try {
+    const newComment = new Comment({
+      recipe: recipeId,
+      user,
+      comment,
+    });
+    await newComment.save();
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    res.status(500).json({ message: 'Error adding comment', error: error.message });
+  }
+});
+
+
+
+app.put('/recipes/:id', upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const { nb_likes } = req.body;
+
+  try {
+    // Find the recipe by ID and update the nb_likes attribute
+    const recipe = await Recipe.findByIdAndUpdate(id, { nb_likes }, { new: true });
+
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' });
+    }
+
+    res.json(recipe);
+  } catch (error) {
+    console.error('Failed to update nb_likes:', error);
+    res.status(500).json({ error: 'Failed to update nb_likes' });
+  }
+});
+
+
