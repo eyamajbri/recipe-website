@@ -197,11 +197,12 @@ app.post('/users',upload.single('profile'), async (req, res) => {
 
 
 app.post('/recipes', upload.single('image'), async (req, res) => {
-  const { name, description, ingredients, category } = req.body;
+  const { email, name, description, ingredients, category } = req.body;
 
   // Save the submitted recipe to the database
   try {
     const recipe = new Recipe({
+      email,
       name,
       description,
       ingredients: ingredients.split(',').map((ingredient) => ingredient.trim()),

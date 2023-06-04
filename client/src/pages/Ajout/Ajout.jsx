@@ -19,7 +19,7 @@ function Ajout() {
 
     // Create a FormData object to send the form data
     const formData = new FormData();
-    formData.append('email', email);
+    formData.append('email', localStorage.getItem('email'));
     formData.append('name', name);
     formData.append('description', description);
     formData.append('ingredients', ingredients.join(','));
