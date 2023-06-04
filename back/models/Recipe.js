@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
+
 const recipeSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  title: {
+  email: {
+    type: String},
+  name: {
     type: String,
     required: true,
   },
@@ -39,7 +37,6 @@ const recipeSchema = new mongoose.Schema({
       return `${day}-${month}-${year}`;
     }
   }
-  
 });
 
 const Recipe = mongoose.model( 'Recipe', recipeSchema);

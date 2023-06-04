@@ -115,7 +115,7 @@ app.get('/users', async (req, res) => {
 });
 
 // Create a new recipe
-app.post('/recipes', requireAuth, async (req, res) => {
+/*app.post('/recipes', requireAuth, async (req, res) => {
   try {
     const {
       title,
@@ -146,7 +146,7 @@ app.post('/recipes', requireAuth, async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-});
+});*/
 
 // Create a new user
 app.post('/users',upload.single('profile'), async (req, res) => {
@@ -191,6 +191,37 @@ app.post('/users',upload.single('profile'), async (req, res) => {
     res.status(500).json({ error: 'Server Error' });
   }
 });
+
+
+
+
+
+app.post('/recipes', upload.single('image'), async (req, res) => {
+  const { name, description, ingredients, category } = req.body;
+
+  // Save the submitted recipe to the database
+  try {
+    const recipe = new Recipe({
+      name,
+      description,
+      ingredients: ingredients.split(',').map((ingredient) => ingredient.trim()),
+      category,
+      image: req.file.filename,
+    });
+    await recipe.save();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error saving recipe:', error);
+    res.sendStatus(500);
+  }
+});
+
+
+
+
+
+
+
 
 // Get all recipes
 app.get('/recipes', async (req, res) => {
