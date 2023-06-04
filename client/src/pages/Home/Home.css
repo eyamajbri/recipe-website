@@ -33,6 +33,16 @@
     padding: 20px;
     font-size: 100px;
   }
+  .text-container h1{
+    font-family: 'Merienda', cursive;    
+    font-size: 40px;
+    font-style: oblique;
+}
+.text-container p{
+    font-family: 'Merienda', cursive;
+    font-style: oblique;
+    font-size: 20px;
+}
 .container-h-recipe {
     background-color:#EDEAE5;
     padding-bottom: 100px;

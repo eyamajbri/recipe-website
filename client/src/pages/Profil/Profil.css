@@ -69,10 +69,8 @@ body{
     background-color: rgb(109, 107, 107);
     border-radius: 10px;
 }
-h3 {
 
-}
-.recipe{
+.recipe-p{
     display: flex;
     text-align:center;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.301);
@@ -82,7 +80,7 @@ h3 {
     margin-bottom: 70px;
     width: 65%;
 }
-.recipe ul {
+.recipe-p ul {
     list-style: none;
   }
 

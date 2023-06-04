@@ -15,8 +15,8 @@ const Profil = () => {
       <div/>
       <hr />
       <br />
-      <h2>Recipes</h2>
-      <div className="recipe">
+      <h2>recipe-ps</h2>
+      <div className="recipe-p">
         <img src={require('./thai-food.jpg')} />
         <div className="desc">
           <ul>
@@ -35,7 +35,7 @@ const Profil = () => {
           < FaHeart/> 100&nbsp;&nbsp;&nbsp;<FaComment/> 20
         </div>
       </div>
-      <div className="recipe">
+      <div className="recipe-p">
         < img src={require('./thai-food.jpg')} />
         <div className="desc">
           <ul>

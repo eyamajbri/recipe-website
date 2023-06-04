@@ -46,6 +46,7 @@ function RecipeForm() {
         setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
       }
     } catch (error) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       console.error('Error saving recipe:', error);
       setSubmitStatus({ message: 'Error saving recipe', type: 'error' });
     }
