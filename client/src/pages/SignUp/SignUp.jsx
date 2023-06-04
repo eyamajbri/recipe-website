@@ -107,7 +107,7 @@ const SignUp = () => {
       <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       </div>
 
-      <div className="form-control-sp">
+      <div className="form-control form-control-sp">
           <label>Product Image</label>
           <input
             type="file"
