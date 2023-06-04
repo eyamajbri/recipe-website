@@ -1,6 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
+import './Navbar.css'
 export default function Navbar() {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,7 +64,7 @@ export default function Navbar() {
           <ul>
             {searchResults.map(recipe => (
               <li key={recipe.id} onClick={() => navigateToRecipe(recipe.id)}>
-<img src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Photo" width={12}/>               
+<img src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Photo" className="recipeImage"/>               
  {recipe.name}
               </li>
             ))}

@@ -39,20 +39,24 @@ const Profil = () => {
           <hr />
           <br />
           <h2>My recipes</h2>
-          {recipes.map(recipe => (
-            <div className="recipe-p" key={recipe._id}>
-            <img  class="recipeimg" src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Image" width="100px"/>
-              <div className="desc">
-                <ul>
-                  <li>{recipe.name}</li>
-                </ul>
-                <button className="btn">Details</button>
-                <br />
-                <br />
-                <FaHeart /> {recipe.nb_likes} &nbsp;&nbsp;&nbsp;<FaComment /> 0
+          {recipes.length ? (
+            recipes.map(recipe => (
+              <div className="recipe-p" key={recipe._id}>
+                <img className="recipeimg" src={`http://localhost:8000/uploads/${recipe.image}`} alt="Recipe Image" width="100px" />
+                <div className="desc">
+                  <ul>
+                    <li>{recipe.name}</li>
+                  </ul>
+                  <button className="btn">Details</button>
+                  <br />
+                  <br />
+                  <FaHeart /> {recipe.nb_likes} &nbsp;&nbsp;&nbsp;<FaComment /> 0
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <h3>No recipes</h3>
+          )}
         </div>
       </div>
       <div className="profil-pic" style={{ backgroundImage: `url(http://localhost:8000/uploads/${localStorage.getItem('photo')})` }}>
