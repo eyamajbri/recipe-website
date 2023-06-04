@@ -4,6 +4,7 @@ export default function Navbar(){
     let navigate = useNavigate()
     if(localStorage.getItem('token')){
         return (
+            
             <div  style={{display:"flex",gap:"20px"}}>
                 <img src={`http://localhost:8000/uploads/${localStorage.getItem('photo')}`} alt="Profile Photo" />
                 <p>{localStorage.getItem('name')}</p>
